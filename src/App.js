@@ -25,16 +25,51 @@ const choice = {
 
 function App() {
   const [userSelect, setUserSelect] = useState(null)
-
+  const [computerSelect, setComputerSelect]= useState(null)
+  const [result, setResult] = useState("")
+  const [result2, setResult2] = useState("")
   const play=(userChoice)=>{
     setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
+    setResult2(judgement2(choice[userChoice], computerChoice));
   };
+
+  const judgement = (user, computer) => {
+    console.log("user", user, "computer", computer);
+    if(user.name == computer.name) {
+      return "tie";
+    } else if(user.name == "Rock") return computer.name == "Scissors" ? "win" : "lose";
+    else if (user.name == "Scissors") return computer.name == "Paper" ? "win" : "lose";
+    else if (user.name == "Paper") return computer.name == "Rock" ? "win" : "lose" ;
+    
+  }
+
+  const judgement2 = (user, computer) => {
+    console.log("user", user, "computer", computer);
+    if(user.name == computer.name) {
+      return "tie";
+    } else if(user.name == "Rock") return computer.name == "Scissors" ? "lose" : "win";
+    else if (user.name == "Scissors") return computer.name == "Paper" ? "lose" : "win";
+    else if (user.name == "Paper") return computer.name == "Rock" ? "lose" : "win" ;
+    
+  }
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice);//객체에 키값만 뽑아서 어레이로 만들어주는 함수다
+    console.log("item array", itemArray);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+    return choice[final];
+    console.log("final", final)
+  }
 
   return (
     <div>
       <div className='main'>
-      <Box title="you" item={userSelect}/>
-      {/*<Box title="computer"/>*/}
+      <Box title="you" item={userSelect} result={result}/>
+      <Box title="Computer" item={computerSelect} result={result2}/>
       </div>
       <div className='main'>
         <button onClick={() => play("scissors")}>가위</button>

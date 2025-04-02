@@ -8,7 +8,7 @@ const Box = (props) => {
         <img
         className='item-img' 
         src={props.item && props.item.img}/>
-        <h2>WIN</h2>
+        <h2>{props.result}</h2>
     </div>
   );
 }
